@@ -1,0 +1,6 @@
+services:
+  rawgitlab:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - GitLab__BaseUrl=https://git.example.com
+      - GitLab__PrivateToken=glpat-YOUR_TOKEN_HERE

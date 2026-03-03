@@ -66,3 +66,10 @@ Temporary Items
 # VS Code
 .vscode/
 *.code-workspace
+
+# Docker
+.env
+
+# Secrets
+appsettings.Production.json
+appsettings.*.local.json
