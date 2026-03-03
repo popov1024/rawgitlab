@@ -1,0 +1,33 @@
+### Health check
+GET http://localhost:5071/
+
+### Get file from GitLab (example)
+### Format: /group/project/-/raw/ref/file_path
+GET http://localhost:5071/arch/components/-/raw/main/person-customer.iuml
+
+### Get README.md from root of repository
+GET http://localhost:5071/mygroup/myproject/-/raw/main/README.md
+
+### Get file from subdirectory
+GET http://localhost:5071/mygroup/myproject/-/raw/main/src/Program.cs
+
+### Get file with special characters in path
+GET http://localhost:5071/mygroup/myproject/-/raw/main/config/appsettings.json
+
+### Get file from different branch
+GET http://localhost:5071/mygroup/myproject/-/raw/develop/README.md
+
+### Get file from tag
+GET http://localhost:5071/mygroup/myproject/-/raw/v1.0.0/CHANGELOG.md
+
+### Get file from subgroup (nested groups)
+GET http://localhost:5071/group/subgroup/project/-/raw/main/file.txt
+
+### Error case: file not found
+GET http://localhost:5071/mygroup/myproject/-/raw/main/nonexistent.txt
+
+### Error case: invalid format (missing -/raw)
+GET http://localhost:5071/mygroup/myproject/main/README.md
+
+### Error case: project not found
+GET http://localhost:5071/invalid/project/-/raw/main/README.md
