@@ -1,0 +1,68 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.dll
+*.exe
+*.pdb
+*.xml
+*.log
+*.tmp
+*.cache
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+*.nuspec
+*.csproj.nuget.*
+*.csproj.user
+*.csproj.DotSettings
+project.lock.json
+project.assets.json
+.nuget/
+packages/
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+
+# Visual Studio
+.vs/
+*.vspscc
+*.vssscc
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+[Bb]uild/
+*.csproj.user
+*.csproj.DotSettings
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Rider
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
