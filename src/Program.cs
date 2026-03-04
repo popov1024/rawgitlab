@@ -3,15 +3,19 @@ using RawGitLab.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuration
-var gitLabSettings = builder.Configuration.GetSection("GitLab").Get<GitLabSettings>() ?? new GitLabSettings();
+// Configuration - AOT-compatible binding
+var gitLabSection = builder.Configuration.GetSection("GitLab");
+var gitLabSettings = new GitLabSettings
+{
+    BaseUrl = gitLabSection["BaseUrl"] ?? string.Empty,
+    PrivateToken = gitLabSection["PrivateToken"] ?? string.Empty
+};
 builder.Services.AddSingleton(gitLabSettings);
 
-// Services
-builder.Services.AddHttpClient();
+// Services - AOT-compatible (no IHttpClientFactory)
 builder.Services.AddSingleton<IGitLabService>(sp =>
 {
-    var httpClient = sp.GetRequiredService<IHttpClientFactory>().CreateClient();
+    var httpClient = new HttpClient();
     var settings = sp.GetRequiredService<GitLabSettings>();
     var logger = sp.GetRequiredService<ILogger<GitLabService>>();
     return new GitLabService(httpClient, settings, logger);
