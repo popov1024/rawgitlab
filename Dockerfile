@@ -2,7 +2,13 @@ ARG DOCKERREGISTRY=mcr.microsoft.com
 ARG DOCKERMMIRROR=
 FROM ${DOCKERREGISTRY}/dotnet/sdk:10.0 AS build
 WORKDIR /src
-RUN apk add --no-cache clang lld musl-dev
+RUN set -eux \
+    && update-ca-certificates --fresh \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        clang \
+        lld \
+        musl-dev
 COPY *.sln ./
 COPY src/*.csproj ./src/
 ARG NUGET=https://api.nuget.org/v3/index.json
