@@ -11,7 +11,7 @@ COPY src/ ./src/
 WORKDIR /src/src
 RUN dotnet publish -c Release -o /app/publish /p:StripSymbols=true
 
-FROM ${DOCKERMMIRROR}alpine AS runtime
+FROM ${DOCKERMMIRROR}alpine:3.24.1 AS runtime
 WORKDIR /app
 EXPOSE 8080
 RUN apk add --no-cache ca-certificates && \
