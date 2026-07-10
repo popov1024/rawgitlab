@@ -1,0 +1,11 @@
+stages:
+  - build
+
+include:
+  - component: $CI_SERVER_FQDN/devops/ci-templates/build-docker@1
+    inputs:
+      environment: production
+      service_name: rawgitlab
+      image_name: rawgitlab
+      push_image_tag_latest: true
+      build_args: --build-arg DOCKERREGISTRY=reg-dck-img.it.beloil.by --build-arg DOCKERMMIRROR=reg-dck-img.it.beloil.by/ --build-arg NUGET=https://nexus.it.beloil.by/repository/nuget/index.json
