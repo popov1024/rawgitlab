@@ -1,6 +1,6 @@
 services:
   rawgitlab:
-    image: rawgitlab:latest
+    image: ${DOCKERMMIRROR}rawgitlab:latest
     build:
       context: .
       dockerfile: Dockerfile
