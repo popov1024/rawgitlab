@@ -1,7 +1,11 @@
 using RawGitLab.Models;
 using RawGitLab.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateSlimBuilder(args);
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+});
 
 // Configuration - AOT-compatible binding
 var gitLabSection = builder.Configuration.GetSection("GitLab");
@@ -33,7 +37,9 @@ app.MapGet("/{*path}", async (
 {
     if (string.IsNullOrEmpty(path))
     {
-        return Results.Ok(new { Status = "OK", GitLabUrl = gitLabSettings.BaseUrl });
+        return Results.Json(
+            new StatusResponse { Status = "OK", GitLabUrl = gitLabSettings.BaseUrl },
+            AppJsonSerializerContext.Default.StatusResponse);
     }
 
     var parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
