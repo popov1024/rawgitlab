@@ -1,6 +1,6 @@
 ARG DOCKERREGISTRY=mcr.microsoft.com
 ARG DOCKERMMIRROR=
-FROM ${DOCKERREGISTRY}/dotnet/sdk:10.0-alpine AS build
+FROM ${DOCKERREGISTRY}/dotnet/sdk:10.0-alpine-aot AS build
 WORKDIR /src
 # Native AOT for musl (Alpine) requires the LLVM toolchain
 RUN apk add --no-cache clang lld build-base
