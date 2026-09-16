@@ -2,8 +2,6 @@ services:
   rawgitlab:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - GitLab__BaseUrl=https://git.example.com
-      - GitLab__PrivateToken=glpat-YOUR_TOKEN_HERE
     ports:
       - "8006:8080"
     restart: unless-stopped
