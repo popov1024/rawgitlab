@@ -14,6 +14,15 @@ var gitLabSettings = new GitLabSettings
     BaseUrl = gitLabSection["BaseUrl"] ?? string.Empty,
     PrivateToken = gitLabSection["PrivateToken"] ?? string.Empty
 };
+
+if (string.IsNullOrWhiteSpace(gitLabSettings.BaseUrl) ||
+    !Uri.TryCreate(gitLabSettings.BaseUrl, UriKind.Absolute, out var gitLabBaseUri) ||
+    (gitLabBaseUri.Scheme != Uri.UriSchemeHttp && gitLabBaseUri.Scheme != Uri.UriSchemeHttps))
+{
+    throw new InvalidOperationException(
+        "GitLab:BaseUrl is not configured. Set the GitLab__BaseUrl environment variable to an absolute http(s) URL (e.g. https://git.example.com).");
+}
+
 builder.Services.AddSingleton(gitLabSettings);
 
 // Services - AOT-compatible (no IHttpClientFactory)
