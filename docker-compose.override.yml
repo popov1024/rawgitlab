@@ -1,5 +1,7 @@
 services:
   rawgitlab:
+    env_file:
+      - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
