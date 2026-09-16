@@ -12,7 +12,8 @@ var gitLabSection = builder.Configuration.GetSection("GitLab");
 var gitLabSettings = new GitLabSettings
 {
     BaseUrl = gitLabSection["BaseUrl"] ?? string.Empty,
-    PrivateToken = gitLabSection["PrivateToken"] ?? string.Empty
+    PrivateToken = gitLabSection["PrivateToken"] ?? string.Empty,
+    SkipCertificateValidation = bool.TryParse(gitLabSection["SkipCertificateValidation"], out var skipCert) && skipCert
 };
 
 if (string.IsNullOrWhiteSpace(gitLabSettings.BaseUrl) ||
@@ -28,9 +29,20 @@ builder.Services.AddSingleton(gitLabSettings);
 // Services - AOT-compatible (no IHttpClientFactory)
 builder.Services.AddSingleton<IGitLabService>(sp =>
 {
-    var httpClient = new HttpClient();
     var settings = sp.GetRequiredService<GitLabSettings>();
     var logger = sp.GetRequiredService<ILogger<GitLabService>>();
+
+    var handler = new HttpClientHandler();
+    if (settings.SkipCertificateValidation)
+    {
+        handler.ServerCertificateCustomValidationCallback =
+            (_, _, _, _) => true;
+        logger.LogWarning(
+            "GitLab SSL certificate validation is DISABLED (GitLab:SkipCertificateValidation=true). " +
+            "Use this only for trusted self-hosted GitLab instances.");
+    }
+
+    var httpClient = new HttpClient(handler);
     return new GitLabService(httpClient, settings, logger);
 });
 

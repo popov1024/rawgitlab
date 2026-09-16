@@ -59,12 +59,14 @@ docker-compose down
 |-----------|-------------|
 | `BaseUrl` | URL of your self-hosted GitLab |
 | `PrivateToken` | Personal Access Token with `read_api` scope |
+| `SkipCertificateValidation` | Set to `true` to disable SSL certificate validation (for self-signed certificates) |
 
 ### Environment Variables
 
 ```bash
 GitLab__BaseUrl=https://git.example.com
 GitLab__PrivateToken=glpat-xxx
+GitLab__SkipCertificateValidation=true
 ```
 
 ## Usage
